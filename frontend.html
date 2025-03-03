@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Downloader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>YouTube Video Downloader</h2>
+    <form id="downloadForm">
+        <input type="text" id="videoLink" placeholder="Enter YouTube URL" required>
+        <button type="submit">Download</button>
+    </form>
+
+    <p id="statusMessage"></p>
+
+    <script>
+        document.getElementById("downloadForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const videoLink = document.getElementById("videoLink").value;
+            if (!videoLink) {
+                alert("Please enter a YouTube video link.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("link", videoLink);
+
+            try {
+                const response = await fetch("http://127.0.0.1:8000/download", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const result = await response.json();
+                document.getElementById("statusMessage").innerText = result.status;
+            } catch (error) {
+                document.getElementById("statusMessage").innerText = "Error: Unable to start download.";
+                console.error("Error:", error);
+            }
+        });
+    </script>
+
+</body>
+</html>
+
+
+
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Downloader</title>
+</head>
+<body>
+    <form id="downloadForm">
+        <label for="link"> video URL:</label>
+        <input type="text" id="link" name="link" required><br>
+    
+        <button  type="submit">Download</button>
+    </form>
+
+    <script>
+        document.getElementById("downloadForm").addEventListener("submit", async function(event) {
+                event.preventDefault();
+                const formData = new FormData(this);
+                const response = await fetch("http://127.0.0.1:8000/download", {
+                    method: "POST",
+                    body: formData
+                });
+                if (response.pk){
+                const result = await response.json();
+                console.log('Response:',result);
+                } else{
+                    console.error('error:',response.statusText);
+                }
+                
+            });
+
+    </script>
+
+</body>
+</html>-->

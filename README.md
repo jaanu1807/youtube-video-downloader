@@ -81,6 +81,6 @@ Improving Python scripting and automation skills
 
 ---
 
-📷 Screenshots
-![Screenshot of YouTube Video Downloader](screenshot.png)
+📷 Screenshot
+Screenshot.png
 
